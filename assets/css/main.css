@@ -24,3 +24,29 @@ input {
     text-align: right;
     width: 100%;
     }
+.sign {
+     background: greenyellow;
+     max-width: 180px;
+     font-size: 20px;
+     text-align: center;
+}
+.reveal {
+    text-align: right;
+    width: 100%;
+    padding: always;
+}
+.msg {
+    max-width: 100px;
+    max-height: 10px;
+    
+}
+
+.reveal2 {
+    text-align: right;
+    width: 100%;
+    padding: always;
+}
+
+.msg {
+    display: none;
+}
