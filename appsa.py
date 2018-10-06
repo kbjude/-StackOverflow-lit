@@ -14,7 +14,7 @@ def index():
     """First display page"""
     return "<h1>CHALLENGE 2</h1>"
 
-@APP.route('/questions', methods=['POST'])
+@APP.route('/send_question', methods=['POST'])
 def send_question():
     '''Handle a question'''
     #Convert the request parameters into dictionary
@@ -41,7 +41,7 @@ def send_question():
 
     return jsonify(output), status_code
 
-@APP.route('/answers', methods=['POST'])
+@APP.route('/question_answer', methods=['POST'])
 def question_answer():
     '''Endpoint for creating answer'''
     answer = request.get_json()
@@ -78,27 +78,43 @@ def question_answer():
 @APP.route('/signup', methods=['POST'])
 def signup():
     """ signup endpoint """
+
+    print(request.get_json)
     data = request.get_json()
     status_code = 200
     message = "User registered successfully"
 
-    if "username" not in data.keys():
+    # csrf ???????
+
+    username = data['username'] if data['username'] else None
+    password = data['password'] if data['password'] else None
+    if username is None: 
         status_code = 400
         message = "You have an empty input"
+        output = {"message":message}
+        return jsonify(output), status_code
 
+    if password is None: 
+        status_code = 400
+        message = 'Password not submitted, please check and try again.'
+        return jsonify(output), status_code
+
+    
     else:
-        #This is a username from json
-        if "username" in data.keys():
-            #loops thru the List
-            for user in USERS:
-                if user["username"] == data["username"]:
-                    status_code = 400
-                    message = "Username already exists"
-                    break
-
-        if "confirm" not in data.keys():
+        user = {
+            'username': username,
+            'password': password
+        }
+        if user['username'] in USERS:
+            message = "Username already exits.. "
             status_code = 400
-            message = "Variable confirm is no where to be seen"
+            return jsonify()
+
+            users.append(user)
+            status_code = 200
+        # if "confirm" not in data.keys():
+        #     status_code = 400
+        #     message = "Variable confirm is no where to be seen"
 
         if "password" not in data.keys():
             status_code = 400
@@ -130,11 +146,13 @@ def signin():
     if "username" not in data.keys():
         status_code = 400
         message = "No username"
-    else:
-        for user in USERS:
-            if user["username"] not in data["username"]:
-                status_code = 400
-                message = "User does not exist"
+    else:    
+        # for user in USERS:
+        #     if user["username"] != data["username"]:
+        #         status_code = 400
+        #         message = "User does not exist"
+
+        
 
     #if status_code == 200:
         output = {"message": message}
