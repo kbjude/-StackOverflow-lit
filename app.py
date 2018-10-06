@@ -7,7 +7,7 @@ APP = Flask(__name__)
 
 QUESTIONS = []
 ANSWERS = []
-USERS = []
+USERS = [nh]
 
 @APP.route('/')
 def index():
