@@ -13,6 +13,7 @@ class TestSignup(unittest.TestCase):
         pass
 
     def test_missing_username(self):
+        '''Test for a missing username'''
         result = self.client().post('/signup',data=json.dumps({'password':'123455','confirm':'123455'}), content_type="application/json")
         self.assertEqual(result.status_code, 400)
         self.assertIn('You did not specify a username',str(result.data))
