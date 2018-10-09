@@ -1,0 +1,52 @@
+.login {
+    font-family: sans-serif;
+    font: oblique;
+    margin-left: 500px;
+    margin-top: 250px;
+    flood-color: lawngreen;   
+}
+
+.body {
+    background-color: slategray;
+    font: white;
+}
+
+input {
+    padding: 13px;
+}
+
+.form {
+    margin: 0px auto;
+    max-width: 400px;
+}
+
+.out_put {
+    text-align: right;
+    width: 100%;
+    }
+.sign {
+     background: greenyellow;
+     max-width: 180px;
+     font-size: 20px;
+     text-align: center;
+}
+.reveal {
+    text-align: right;
+    width: 100%;
+    padding: always;
+}
+.msg {
+    max-width: 100px;
+    max-height: 10px;
+    
+}
+
+.reveal2 {
+    text-align: right;
+    width: 100%;
+    padding: always;
+}
+
+.msg {
+    display: none;
+}

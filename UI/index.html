@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <link rel="stylesheet" type="text/css" href="assets/css/main.css"> 
+            <script src="assets/js/main.js"></script>
+        <title>
+             Login
+        </title>
+    </head>
+    <body class="body"> 
+            <div id = "reveal" class = "reveal">
+                <p>You are logged in as:</p>
+            </div>
+            <div id = "reveal2" class = "reveal2">
+                Questions or Suggested Answers
+            </div>
+            <div class="login" id = "login">
+            <form action = "" method="POST">
+                <br><input type="text" id = "login_name" name = "login" placeholder="user name"> <br><br>
+
+                <br><input type="password" id = "pass" name="pass" placeholder="Password"> <br><br>
+                <input type="submit" value="Login" onclick = "return refresh();"> | <a href="register.html"> Sign Up </a>
+            </form>
+            <div id = "msg" class = "msg">
+            <form action = "" method = "POST" id = "message">
+                <input type = "text" id = "title" name = "title" placeholder = "Tittle">
+                <input type = "text" id = "message" name = "message" placeholder = "Question or Answer" item-height = "4" scroll = "yes">
+                <input type ="submit" value="Post" onclick="return form2()">
+            </form>
+            </div>
+            </div>
+    </body>
+</html>
