@@ -4,6 +4,6 @@ python:
 before_install:
     - pip install -r requirements.txt
 script:
-    - pytest --cov-report term-missing -v tests/*
+    - pytest --cov-report term-missing --cov api/ tests/*
 after_success:
     - coveralls
