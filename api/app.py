@@ -3,18 +3,18 @@ import uuid
 from flask import Flask
 from flask import request, jsonify
 
-APP = Flask(__name__)
+my_app = Flask(__name__)
 
 QUESTIONS = []
 ANSWERS = []
-USERS = [nh]
+USERS = []
 
-@APP.route('/')
+@my_app.route('/')
 def index():
     """First display page"""
     return "<h1>CHALLENGE 2</h1>"
 
-@APP.route('/questions', methods=['POST'])
+@my_app.route('/questions', methods=['POST'])
 def send_question():
     '''Handle a question'''
     #Convert the request parameters into dictionary
@@ -41,7 +41,7 @@ def send_question():
 
     return jsonify(output), status_code
 
-@APP.route('/answers', methods=['POST'])
+@my_app.route('/answers', methods=['POST'])
 def question_answer():
     '''Endpoint for creating answer'''
     answer = request.get_json()
@@ -75,7 +75,7 @@ def question_answer():
 
     return jsonify(output), status_code
 
-@APP.route('/signup', methods=['POST'])
+@my_app.route('/signup', methods=['POST'])
 def signup():
     """ signup endpoint """
     data = request.get_json()
@@ -84,7 +84,7 @@ def signup():
 
     if "username" not in data.keys():
         status_code = 400
-        message = "You have an empty input"
+        message = "You did not specify a username"
 
     else:
         #This is a username from json
@@ -98,20 +98,20 @@ def signup():
 
         if "confirm" not in data.keys():
             status_code = 400
-            message = "Variable confirm is no where to be seen"
+            message = "Type to confirm the password"
 
         if "password" not in data.keys():
             status_code = 400
-            message = "Variable password is no where to be seen"
-# work on this as soon as i reach office
+            message = "Missing password"
+        # work on this as soon as i reach office
         if len("password") == len("confirm"):
             status_code = 200
             message = "Username and password successfully saved"
         else:
             len("password") != len("confirm")
 
-    #if status_code == 400:
-     #   message = "The user you are trying to create already exists"
+        #if status_code == 400:
+        #   message = "The user you are trying to create already exists"
 
     if status_code == 200:
         USERS.append(data)
@@ -120,13 +120,13 @@ def signup():
 
     return jsonify(output), status_code
 
-@APP.route('/signin', methods=['POST'])
+@my_app.route('/signin', methods=['POST'])
 def signin():
     """ The signin endpoint """
     data = request.get_json()
     status_code = 200
     message = "Logged in succesfuly"
-#work on first thing in office
+    #work on first thing in office
     if "username" not in data.keys():
         status_code = 400
         message = "No username"
@@ -139,16 +139,6 @@ def signin():
     #if status_code == 200:
         output = {"message": message}
         return jsonify(output), status_code
-"""
-@APP.route('/receive_questions', methods = ['GET'])
-def receive_questions():
-    result = "result"
-    return jsonify({"key":['1','2']})
-@APP.route('/receive_question', methods = ['GET'])
-def receive_question():
-    single_result = "single_result"
-    return jsonify(single_result) 
 
-"""
 if __name__ =="__main__":
-    APP.run(debug=True)
+    my_app.run(debug=True)
