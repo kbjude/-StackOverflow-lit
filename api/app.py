@@ -2,6 +2,7 @@
 import uuid
 from flask import Flask
 from flask import request, jsonify
+from user import User
 
 my_app = Flask(__name__)
 
@@ -61,7 +62,7 @@ def question_answer():
             message = "Question does not exisit"
 
     if "answer" not in answer.keys():
-        message = "You have not typed any thing in you answer, do you want to submit ablank form?"
+        message = "Missing answer"
         status_code = 400
 
     if status_code == 200:
@@ -79,8 +80,16 @@ def question_answer():
 def signup():
     """ signup endpoint """
     data = request.get_json()
+    user = User(data)
+
     status_code = 200
     message = "User registered successfully"
+
+    if user.validate() == True:
+        user.save()
+    else:
+        message = user.message
+        status_code = 400
 
     if "username" not in data.keys():
         status_code = 400
@@ -124,21 +133,33 @@ def signup():
 def signin():
     """ The signin endpoint """
     data = request.get_json()
-    status_code = 200
-    message = "Logged in succesfuly"
-    #work on first thing in office
+    status_code = 400
+    message = "Invalid username or password"
+  
+    errors = []
+
     if "username" not in data.keys():
         status_code = 400
-        message = "No username"
+        errors.append("Missing username")
+    elif len(data["username"]) < 5 or len(data["username"]) > 50:
+        status_code = 400
+        errors.append("Username must be between 5 and 50 characters")
+
+    if "password" not in data.keys():
+        status_code = 400
+        errors.append("Missing password")
+
+    if len(errors) > 0:
+        message = ", ".join(errors)
     else:
         for user in USERS:
-            if user["username"] not in data["username"]:
-                status_code = 400
-                message = "User does not exist"
-
-    #if status_code == 200:
-        output = {"message": message}
-        return jsonify(output), status_code
+            if user["username"] == data["username"] and user["password"] == data["password"]:
+                message = "Logged in successfully"
+                status_code = 200
+                break
+    
+    output = {"message": message}
+    return jsonify(output), status_code
 
 if __name__ =="__main__":
     my_app.run(debug=True)
